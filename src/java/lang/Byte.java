@@ -60,13 +60,15 @@ public final class Byte extends Number implements Comparable<Byte> {
      * A constant holding the minimum value a {@code byte} can
      * have, -2<sup>7</sup>.
      */
-    public static final byte MIN_VALUE = -128; // byte最小值
+    // byte最小值
+    public static final byte MIN_VALUE = -128;
     
     /**
      * A constant holding the maximum value a {@code byte} can
      * have, 2<sup>7</sup>-1.
      */
-    public static final byte MAX_VALUE = 127; // byte最大值
+    // byte最大值
+    public static final byte MAX_VALUE = 127;
     
     /**
      * The number of bits used to represent a {@code byte} value in two's
@@ -74,7 +76,8 @@ public final class Byte extends Number implements Comparable<Byte> {
      *
      * @since 1.5
      */
-    public static final int SIZE = 8;   // 当前类型所占bit[位]数
+    // 当前类型所占bit[位]数
+    public static final int SIZE = 8;
     
     /**
      * The number of bytes used to represent a {@code byte} value in two's
@@ -82,14 +85,16 @@ public final class Byte extends Number implements Comparable<Byte> {
      *
      * @since 1.8
      */
-    public static final int BYTES = SIZE / Byte.SIZE;   // 当前类型所占字节数
+    // 当前类型所占字节数
+    public static final int BYTES = SIZE / Byte.SIZE;
     
     /**
      * The value of the {@code Byte}.
      *
      * @serial
      */
-    private final byte value;   // 当前类包装的值
+    // 当前类包装的值
+    private final byte value;
     
     
     
