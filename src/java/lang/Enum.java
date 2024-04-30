@@ -73,7 +73,10 @@ import java.io.Serializable;
  *   // ......
  * }
  */
+// 直接enum Color {} 是语法糖, 实际实现如上
+// 使用enumeration types 作为set/map 的key中时，需要专门且高效的EnumSet和EnumMap
 @SuppressWarnings("serial")
+// 抽象类，泛型参数E需要是Enum的子class
 public abstract class Enum<E extends Enum<E>> implements Comparable<E>, Serializable {
     /* No serialVersionUID needed due to special-casing of enum types. */
     
@@ -176,7 +179,8 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, Serializ
      * same enum type.  The natural order implemented by this
      * method is the order in which the constants are declared.
      */
-    // 比较枚举实例的值；声明靠前的枚举，其"值"较小
+    // 判断是否同一个declaringclass，枚举常量只能与相同枚举类型的其他枚举常量进行比较
+    // 再比较枚举实例的值；声明靠前的枚举，其"值"较小
     public final int compareTo(E o) {
         Enum<?> other = (Enum<?>) o;
         Enum<E> self = this;
@@ -281,6 +285,7 @@ public abstract class Enum<E extends Enum<E>> implements Comparable<E>, Serializ
      *
      * @return (never returns)
      */
+    // 单例确保无法clone
     protected final Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
