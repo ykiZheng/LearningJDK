@@ -164,6 +164,7 @@ public abstract class Reference<T> {
      *        dequeued: ReferenceQueue.NULL
      *    unregistered: ReferenceQueue.NULL
      */
+    // 通过gc/enqueue()进入队列
     volatile ReferenceQueue<? super T> queue;   // "报废引用"队列，当前引用被垃圾回收之后会存于此；多个引用可以共享一个引用队列
     
     /* The link in a ReferenceQueue's list of Reference objects.
