@@ -174,6 +174,8 @@ public abstract class Reference<T> {
      *        dequeued: this (marking FinalReferences as inactive)
      *    unregistered: null
      */
+    // volatile 确保多线程对next变量的读写操作是可见的
+    // next的赋值如上
     @SuppressWarnings("rawtypes")
     volatile Reference next;
     
@@ -244,7 +246,8 @@ public abstract class Reference<T> {
         
         static {
             // pre-load and initialize Cleaner class so that we don't get into trouble later in the run loop if there's memory shortage while loading/initializing it lazily.
-            ensureClassInitialized(Cleaner.class);  // 确保jdk.internal.ref.Cleaner已经初始化
+            // 预加载&初始化jdk.internal.ref.Cleaner已经初始化, 这样如果延迟loading/initializing时内存不足，不会在运行循环中遇到麻烦
+            ensureClassInitialized(Cleaner.class);
         }
         
         ReferenceHandler(ThreadGroup g, String name) {
@@ -274,6 +277,7 @@ public abstract class Reference<T> {
      * Wait until the VM's pending-Reference list may be non-null.
      */
     // 等待，直到到VM的pending-Reference列表可能为非null。
+    // native表示是原生函数,用C/C++实现,并被编译为了DLL
     private static native void waitForReferencePendingList();
     
     /**
@@ -341,6 +345,7 @@ public abstract class Reference<T> {
     // 传入自定义引用referent和ReferenceQueue，当reference被回收后，会添加到queue中
     Reference(T target, ReferenceQueue<? super T> queue) {
         this.target = target;
+        // ReferenceQueue.NULL 表示没有注册到引用队列
         this.queue = (queue == null) ? ReferenceQueue.NULL : queue;
     }
     
